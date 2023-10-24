@@ -57,22 +57,33 @@ public class SparseMatrixConverter {
 		return nonzeroElement;
 	}
 
-	public static void toSpars() {
-		int[][] tempspars=new int[matrix.size()][3];
-		int[] firstRow = {matrix.size(), matrix.get(0).size(),nonzerocounter()};
-		for (int i = 0; i < firstRow.length; i++) {
-			sparsMatrix.get(0).add(firstRow[i]);
-		}
+	public static void toSparse() {
+		
+		    int nonzeroElements = nonzerocounter();
+		    sparsMatrix.add(new ArrayList<>(List.of(matrix.size(), matrix.get(0).size(), nonzeroElements)));
+
+		    for (int i = 0; i < matrix.size(); i++) {
+		        for (int j = 0; j < matrix.get(i).size(); j++) {
+		            int element = matrix.get(i).get(j);
+		            if (element != 0) {
+		                sparsMatrix.add(new ArrayList<>(List.of(i, j, element)));
+		            }
+		        }
+		    }
+
+		    System.out.println("The sparse matrix representation is:");
+
+		    for (ArrayList<Integer> row : sparsMatrix) {
+		        for (int element : row) {
+		            System.out.print(element + " ");
+		        }
+		        System.out.println();
+		    }
+		
 	}
 
 	public static void main(String[] args) {
 		getMatrix();
-		System.out.println("nonzero"+nonzerocounter());
-		toSpars();
-		System.out.println("row"+matrix.size());
-		System.out.println("col"+matrix.get(0).size());
-		System.out.println("col"+matrix.get(0).size());
-		
-
-	}
+		toSparse();
+		}
 }
