@@ -1,20 +1,14 @@
 package sparseMatrix;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SparseMatrixConverter {
-	static int numRow = 0;
-	static int columnCount = 0;
 	static ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
-	static ArrayList<ArrayList<Integer>> sparsMatrix = new ArrayList<>();
+	static ArrayList<ArrayList<Integer>> sparseMatrix = new ArrayList<>();
 
 	public static void getMatrix() {
-
 		Scanner input = new Scanner(System.in);
 
 		System.out.println("Enter the matrix (each row on a new line, elements separated by space):");
@@ -45,45 +39,43 @@ public class SparseMatrixConverter {
 		}
 	}
 
-	public static int nonzerocounter() {
-		int nonzeroElement = 0;
+	public static int countNonZeroElements() {
+		int nonZeroElements = 0;
 		for (ArrayList<Integer> row : matrix) {
 			for (int element : row) {
 				if (element != 0) {
-					nonzeroElement++;
+					nonZeroElements++;
 				}
 			}
 		}
-		return nonzeroElement;
+		return nonZeroElements;
 	}
 
-	public static void toSparse() {
-		
-		    int nonzeroElements = nonzerocounter();
-		    sparsMatrix.add(new ArrayList<>(List.of(matrix.size(), matrix.get(0).size(), nonzeroElements)));
+	public static void convertToSparse() {
+		int nonZeroElements = countNonZeroElements();
+		sparseMatrix.add(new ArrayList<>(List.of(matrix.size(), matrix.get(0).size(), nonZeroElements)));
 
-		    for (int i = 0; i < matrix.size(); i++) {
-		        for (int j = 0; j < matrix.get(i).size(); j++) {
-		            int element = matrix.get(i).get(j);
-		            if (element != 0) {
-		                sparsMatrix.add(new ArrayList<>(List.of(i, j, element)));
-		            }
-		        }
-		    }
+		for (int i = 0; i < matrix.size(); i++) {
+			for (int j = 0; j < matrix.get(i).size(); j++) {
+				int element = matrix.get(i).get(j);
+				if (element != 0) {
+					sparseMatrix.add(new ArrayList<>(List.of(i, j, element)));
+				}
+			}
+		}
 
-		    System.out.println("The sparse matrix representation is:");
+		System.out.println("The sparse matrix representation is:");
 
-		    for (ArrayList<Integer> row : sparsMatrix) {
-		        for (int element : row) {
-		            System.out.print(element + " ");
-		        }
-		        System.out.println();
-		    }
-		
+		for (ArrayList<Integer> row : sparseMatrix) {
+			for (int element : row) {
+				System.out.print(element + " ");
+			}
+			System.out.println();
+		}
 	}
 
 	public static void main(String[] args) {
 		getMatrix();
-		toSparse();
-		}
+		convertToSparse();
+	}
 }
